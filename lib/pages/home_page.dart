@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:imc_calculator/widgets/refresh_button.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -52,6 +53,11 @@ class HomePageState extends State<HomePage> {
     }
   }
 
+  void resetPage() {
+    _resetTextFields();
+    _resetValidatonErrorMessages();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -62,13 +68,7 @@ class HomePageState extends State<HomePage> {
           centerTitle: true,
           backgroundColor: Colors.lightGreen,
           actions: [
-            IconButton(
-              onPressed: () {
-                _resetTextFields();
-                _resetValidatonErrorMessages();
-              },
-              icon: const Icon(Icons.refresh),
-            ),
+            RefreshButton(onpressedFunction: resetPage),
           ],
         ),
         backgroundColor: Colors.white,
@@ -121,7 +121,7 @@ class HomePageState extends State<HomePage> {
                     ),
                     controller: heightController,
                     validator: (String? value) {
-                      if(value == null || value.isEmpty) {
+                      if (value == null || value.isEmpty) {
                         return 'Insira sua altura';
                       }
                     },
@@ -133,7 +133,7 @@ class HomePageState extends State<HomePage> {
                     ),
                     child: ElevatedButton(
                       onPressed: () {
-                        if(_formKey.currentState!.validate()) {
+                        if (_formKey.currentState!.validate()) {
                           calculateImc();
                         }
                       },
