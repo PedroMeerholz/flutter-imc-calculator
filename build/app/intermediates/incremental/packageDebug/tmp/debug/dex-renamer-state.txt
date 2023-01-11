@@ -1,4 +1,4 @@
-#Wed Jan 11 18:56:49 BRT 2023
+#Wed Jan 11 20:16:35 BRT 2023
 base.0=/home/pedro-meerholz/Documents/flutter-imc-calculator/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
 renamed.0=classes.dex
 path.0=classes.dex
