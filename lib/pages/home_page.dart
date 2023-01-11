@@ -6,19 +6,61 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
+  TextEditingController weightController = TextEditingController();
+  TextEditingController heightController = TextEditingController();
+  String _result = 'Resultado: ';
+
+  void _resetTextFields() {
+    setState(() {
+      weightController.text = '';
+      heightController.text = '';
+      _result = 'Resultado: ';
+    });
+  }
+
+  void calculateImc() {
+    String stringWeight = weightController.text;
+    double weight = double.parse(stringWeight);
+    String stringHeight = heightController.text;
+    double height = double.parse(stringHeight) / 100;
+    double imc = weight / (height * height);
+    setState(() {
+      alterResult(imc);
+    });
+  }
+
+  void alterResult(double imc) {
+    String convertedImc = imc.toStringAsPrecision(3);
+    if(imc < 18.6) {
+      _result = 'Resultado: Abaixo do peso (${convertedImc})';
+    } else if(imc >= 18.6 && imc < 24.9) {
+      _result = 'Resultado: Peso ideal (${convertedImc})';
+    } else if(imc >= 24.9 && imc < 29.9) {
+      _result = 'Resultado: Levemente acima do peso ${convertedImc}';
+    } else if(imc >= 29.9 && imc < 34.9) {
+      _result = 'Resultado: Obesidade Grau I ${convertedImc}';
+    } else if(imc >= 34.9 && imc < 39.9) {
+      _result = 'Resultado: Obesidade Grau II ${convertedImc}';
+    } else if(imc >= 40) {
+      _result = 'Resultado: Obesidade Grau III ${convertedImc}';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Calculadora de IMC'),
+          title: const Text('Calculadora de IMC'),
           centerTitle: true,
           backgroundColor: Colors.lightGreen,
           actions: [
             IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.refresh),
+              onPressed: () {
+                _resetTextFields();
+              },
+              icon: const Icon(Icons.refresh),
             ),
           ],
         ),
@@ -35,33 +77,35 @@ class HomePageState extends State<HomePage> {
                   size: 120,
                   color: Colors.lightGreen,
                 ),
-                const TextField(
+                TextField(
                   keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Peso (Kg)',
                     labelStyle: TextStyle(
                       color: Colors.lightGreen,
                     ),
                   ),
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.lightGreen,
                     fontSize: 20,
                   ),
+                  controller: weightController,
                 ),
-                const TextField(
+                TextField(
                   keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Altura (cm)',
                     labelStyle: TextStyle(
                       color: Colors.lightGreen,
                     ),
                   ),
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.lightGreen,
                     fontSize: 20,
                   ),
+                  controller: heightController,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(
@@ -69,16 +113,16 @@ class HomePageState extends State<HomePage> {
                     bottom: 10,
                   ),
                   child: ElevatedButton(
-                    onPressed: () {},
-                    child: Text('Calcular'),
+                    onPressed: calculateImc,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.lightGreen,
                     ),
+                    child: const Text('Calcular',),
                   ),
                 ),
-                const Text(
-                  'Resultado: ',
-                  style: TextStyle(
+                Text(
+                  _result,
+                  style: const TextStyle(
                     color: Colors.lightGreen,
                     fontSize: 20,
                   ),
