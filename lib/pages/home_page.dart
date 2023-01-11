@@ -76,8 +76,13 @@ class HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-                Text(
-                  'Teste',
+                const Text(
+                  'Resultado: ',
+                  style: TextStyle(
+                    color: Colors.lightGreen,
+                    fontSize: 20,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
               ],
             ),
