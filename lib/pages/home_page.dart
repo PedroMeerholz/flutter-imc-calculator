@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:imc_calculator/widgets/imc_text_field.dart';
 import 'package:imc_calculator/widgets/refresh_button.dart';
 
 class HomePage extends StatefulWidget {
@@ -58,6 +59,18 @@ class HomePageState extends State<HomePage> {
     _resetValidatonErrorMessages();
   }
 
+  String? heightValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Insira sua altura';
+    }
+  }
+
+  String? weightValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Insira seu peso';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -86,46 +99,8 @@ class HomePageState extends State<HomePage> {
                     size: 120,
                     color: Colors.lightGreen,
                   ),
-                  TextFormField(
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: 'Peso (Kg)',
-                      labelStyle: TextStyle(
-                        color: Colors.lightGreen,
-                      ),
-                    ),
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      color: Colors.lightGreen,
-                      fontSize: 20,
-                    ),
-                    controller: weightController,
-                    validator: (String? value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Insira seu peso';
-                      }
-                    },
-                  ),
-                  TextFormField(
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: 'Altura (cm)',
-                      labelStyle: TextStyle(
-                        color: Colors.lightGreen,
-                      ),
-                    ),
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      color: Colors.lightGreen,
-                      fontSize: 20,
-                    ),
-                    controller: heightController,
-                    validator: (String? value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Insira sua altura';
-                      }
-                    },
-                  ),
+                  ImcTextField(controller: weightController, labelText: 'Peso (Kg)', validatorFunction: weightValidator),
+                  ImcTextField(controller: heightController, labelText: 'Altura (cm)', validatorFunction: heightValidator),
                   Padding(
                     padding: const EdgeInsets.only(
                       top: 10,
