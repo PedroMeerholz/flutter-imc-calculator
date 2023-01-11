@@ -20,6 +20,10 @@ class HomePageState extends State<HomePage> {
     });
   }
 
+  void _resetValidatonErrorMessages() {
+    _formKey = GlobalKey<FormState>();
+  }
+
   void calculateImc() {
     String stringWeight = weightController.text;
     double weight = double.parse(stringWeight);
@@ -61,6 +65,7 @@ class HomePageState extends State<HomePage> {
             IconButton(
               onPressed: () {
                 _resetTextFields();
+                _resetValidatonErrorMessages();
               },
               icon: const Icon(Icons.refresh),
             ),
