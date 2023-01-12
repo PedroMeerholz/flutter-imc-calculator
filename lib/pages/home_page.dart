@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:imc_calculator/widgets/imc_text_field.dart';
 import 'package:imc_calculator/widgets/refresh_button.dart';
 
+import '../widgets/green_confirmation_button.dart';
+
 class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => HomePageState();
@@ -71,6 +73,12 @@ class HomePageState extends State<HomePage> {
     }
   }
 
+  void validateForm() {
+    if (_formKey.currentState!.validate()) {
+      calculateImc();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -99,27 +107,17 @@ class HomePageState extends State<HomePage> {
                     size: 120,
                     color: Colors.lightGreen,
                   ),
-                  ImcTextField(controller: weightController, labelText: 'Peso (Kg)', validatorFunction: weightValidator),
-                  ImcTextField(controller: heightController, labelText: 'Altura (cm)', validatorFunction: heightValidator),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 10,
-                      bottom: 10,
-                    ),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          calculateImc();
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.lightGreen,
-                      ),
-                      child: const Text(
-                        'Calcular',
-                      ),
-                    ),
+                  ImcTextField(
+                    controller: weightController,
+                    labelText: 'Peso (Kg)',
+                    validatorFunction: weightValidator,
                   ),
+                  ImcTextField(
+                    controller: heightController,
+                    labelText: 'Altura (cm)',
+                    validatorFunction: heightValidator,
+                  ),
+                  GreenConfirmationButton(onPressedFunction: validateForm),
                   Text(
                     _result,
                     style: const TextStyle(
